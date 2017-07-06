@@ -4,7 +4,7 @@ RUN export LC_ALL="en_US.UTF-8"
 RUN export LANG="en_US.UTF-8"
 RUN export LANGUAGE="en_US.UTF-8"
 RUN export LC_TYPE="UTF-8"
-RUN apt-get update && apt-get -y upgrade
+RUN apt-get update && apt-get -y install apt-utils && apt-get -y upgrade
 ARG DEBIAN_FRONTEND=noninteractive
 RUN echo "mysql-server mysql-server/root_password password 123456" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password 123456" | debconf-set-selections
@@ -13,7 +13,7 @@ RUN apt-get -y install wget g++ make libevent-dev uuid-dev libmysql++-dev python
 RUN wget https://github.com/gearman/gearmand/releases/download/1.1.16/gearmand-1.1.16.tar.gz
 RUN tar -xvzf gearmand-1.1.16.tar.gz
 RUN cd gearmand-1.1.16
-RUN ./configure --enable-ssl
+RUN /bin/sh configure --enable-ssl
 RUN make
 RUN make install
 RUN echo -e "\n[mysqld]\nbind-address = 0.0.0.0\nsql_mode = NO_ENGINE_SUBSTITUTION\n" | tee -a /etcmysql/conf.d/mysql.cnf
