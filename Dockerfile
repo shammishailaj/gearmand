@@ -5,10 +5,11 @@ RUN export LANG="en_US.UTF-8"
 RUN export LANGUAGE="en_US.UTF-8"
 RUN export LC_TYPE="UTF-8"
 RUN apt-get update && apt-get -y upgrade
+ARG DEBIAN_FRONTEND=noninteractive
 RUN echo "mysql-server mysql-server/root_password password 123456" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password 123456" | debconf-set-selections
 RUN apt-get -y install mysql-server
-RUN apt-get -y install g++ make libevent-dev uuid-dev libmysql++-dev python-sphinx libtool automake libsqlite3-dev libssl-dev libmemcached-dev git gperf libboost-program-options-dev
+RUN apt-get -y install wget g++ make libevent-dev uuid-dev libmysql++-dev python-sphinx libtool automake libsqlite3-dev libssl-dev libmemcached-dev git gperf libboost-program-options-dev
 RUN wget https://github.com/gearman/gearmand/releases/download/1.1.16/gearmand-1.1.16.tar.gz
 RUN tar -xvzf gearmand-1.1.16.tar.gz
 RUN cd gearmand-1.1.16
