@@ -19,4 +19,6 @@ RUN echo -e "\n[mysqld]\nbind-address = 0.0.0.0\nsql_mode = NO_ENGINE_SUBSTITUTI
 RUN service mysql restart
 RUN mysql -u root -p123456 -e"CREATE DATABASE gearman;"
 RUN touch /var/log/gearmand.log
-CMD gearmand --listen 0.0.0.0 --port 4730 --queue-type mysql --mysql-host localhost --mysql-port 3306 --mysql-user root --mysql-password 123456 --mysql-db gearman --log-file /var/log/gearmand.log --verbose DEBUG --http-port=8000 --protocol=http
+EXPOSE 4730
+EXPOSE 8080
+CMD gearmand --listen 0.0.0.0 --port 4730 --queue-type mysql --mysql-host localhost --mysql-port 3306 --mysql-user root --mysql-password 123456 --mysql-db gearman --log-file /var/log/gearmand.log --verbose DEBUG --http-port=8080 --protocol=http
