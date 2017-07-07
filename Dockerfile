@@ -12,10 +12,7 @@ RUN apt-get -y install mysql-server
 RUN apt-get -y install wget g++ make libevent-dev uuid-dev libmysql++-dev python-sphinx libtool automake libsqlite3-dev libssl-dev libmemcached-dev git gperf libboost-program-options-dev
 RUN wget https://github.com/gearman/gearmand/releases/download/1.1.16/gearmand-1.1.16.tar.gz
 RUN tar -xvzf gearmand-1.1.16.tar.gz
-RUN cd gearmand-1.1.16
-RUN /bin/sh configure --enable-ssl
-RUN make
-RUN make install
+RUN cd gearmand-1.1.16 && ./configure --enable-ssl && make && make install
 RUN echo -e "\n[mysqld]\nbind-address = 0.0.0.0\nsql_mode = NO_ENGINE_SUBSTITUTION\n" | tee -a /etcmysql/conf.d/mysql.cnf
 RUN service mysql restart
 RUN mysql -u root -p123456 -e"CREATE DATABASE gearman;"
