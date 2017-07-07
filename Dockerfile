@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 ARG DEBIAN_FRONTEND=noninteractive
-RUN timedatectl set-timezone Asia/Kolkata && echo -e "LC_ALL=\"en_US.UTF-8\"\nLANG=\"en_US.UTF-8\"\nLANGUAGE=\"en_US.UTF-8\"\nLC_TYPE=\"UTF-8\"\n" | tee -a /etc/environment && export LC_ALL="en_US.UTF-8" && export LANG="en_US.UTF-8" && export LANGUAGE="en_US.UTF-8" && export LC_TYPE="UTF-8"
+RUN ln -sf ../usr/share/zoneinfo/Asia/Kolkata /etc/localtime && echo -e "LC_ALL=\"en_US.UTF-8\"\nLANG=\"en_US.UTF-8\"\nLANGUAGE=\"en_US.UTF-8\"\nLC_TYPE=\"UTF-8\"\n" | tee -a /etc/environment && export LC_ALL="en_US.UTF-8" && export LANG="en_US.UTF-8" && export LANGUAGE="en_US.UTF-8" && export LC_TYPE="UTF-8"
 RUN apt-get update && apt-get -y install apt-utils && apt-get -y upgrade
 RUN echo "mysql-server mysql-server/root_password password 123456" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password 123456" | debconf-set-selections
