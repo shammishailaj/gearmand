@@ -11,7 +11,7 @@ RUN cd gearmand-1.1.16 && ./configure --enable-ssl && make && make install
 RUN echo -e "\n[mysqld]\nbind-address = 0.0.0.0\nsql_mode = NO_ENGINE_SUBSTITUTION\n" | tee -a /etc/mysql/conf.d/mysql.cnf
 RUN service mysql restart && mysqladmin -u root -p123456 create gearman
 RUN touch /var/log/gearmand.log
-RUN apt-get -y remove g++ make libevent-dev uuid-dev libmysql++-dev python-sphinx libtool automake libsqlite3-dev libssl-dev libmemcached-dev gperf libboost-program-options-dev && apt-get -y autremove
+RUN apt-get -y remove g++ make libevent-dev uuid-dev libmysql++-dev python-sphinx libtool automake libsqlite3-dev libssl-dev libmemcached-dev gperf libboost-program-options-dev && apt-get -y autoremove
 EXPOSE 4730
 EXPOSE 8080
 CMD gearmand --listen 0.0.0.0 --port 4730 --queue-type mysql --mysql-host localhost --mysql-port 3306 --mysql-user root --mysql-password 123456 --mysql-db gearman --log-file /var/log/gearmand.log --verbose DEBUG --http-port=8080 --protocol=http
